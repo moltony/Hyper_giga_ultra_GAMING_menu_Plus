@@ -1,7 +1,6 @@
 package hyper.giga.ultra.gaming.menu.plus;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
-import hyper.giga.ultra.gaming.menu.plus.cool.AnimationLoader;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;

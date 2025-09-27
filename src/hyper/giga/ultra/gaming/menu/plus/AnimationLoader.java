@@ -1,4 +1,4 @@
-package hyper.giga.ultra.gaming.menu.plus.cool;
+package hyper.giga.ultra.gaming.menu.plus;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
