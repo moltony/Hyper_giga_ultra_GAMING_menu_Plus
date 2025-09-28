@@ -46,6 +46,7 @@ public class AnimationLoader
                 g.dispose();
                 frameArray[i] = copy;
             }
+            
             return frameArray;
         } catch (IOException exc) {
             ErrorHandler.handleError(exc, exc.toString());

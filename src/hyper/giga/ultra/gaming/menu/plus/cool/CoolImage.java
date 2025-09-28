@@ -29,8 +29,6 @@ public class CoolImage
         this.frameDelay = frameDelay;
         this.tickCounter = 0;
         this.currentFrame = 0;
-        
-        validateImages();
     }
     
     public CoolImage(BufferedImage image, double angle, double scaleX, double scaleY, Color tint)
@@ -60,8 +58,6 @@ public class CoolImage
         this.frameDelay = 0;
         this.tickCounter = 0;
         this.currentFrame = 0;
-        
-        validateImages();
     }
     
     public void update()
@@ -103,22 +99,22 @@ public class CoolImage
     
     public double getWidth()
     {
-        return (double)images[0].getWidth();
+        return (double)images[currentFrame].getWidth();
     }
     
     public double getHeight()
     {
-        return (double)images[0].getHeight();
+        return (double)images[currentFrame].getHeight();
     }
     
     public double getScaledWidth()
     {
-        return (double)images[0].getWidth() * scaleX;
+        return getWidth() * scaleX;
     }
     
     public double getScaledHeight()
     {
-        return (double)images[0].getHeight() * scaleY;
+        return getHeight() * scaleY;
     }
     
     public double getScaleX()
@@ -129,22 +125,5 @@ public class CoolImage
     public double getScaleY()
     {
         return scaleY;
-    }
-    
-    private void validateImages()
-    {        
-        // As much as I like customization, images all having different size is stupid.
-
-        if (images.length <= 1) {
-            return;
-        }
-        
-        int firstWidth = images[0].getWidth();
-        int firstHeight = images[0].getHeight();
-        for (BufferedImage image : images) {
-            if (image.getWidth() != firstWidth || image.getHeight() != firstHeight) {
-                throw new IllegalArgumentException("All frames of a cool image must be the same dimensions");
-            }
-        }
     }
 }

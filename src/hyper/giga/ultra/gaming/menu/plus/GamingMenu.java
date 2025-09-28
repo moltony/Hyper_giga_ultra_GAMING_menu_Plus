@@ -88,7 +88,7 @@ public class GamingMenu
                 },
                 DEFAULT_WIDTH,
                 DEFAULT_HEIGHT,
-                new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/arknight girl middle finger.gif"), 0.0, 0.4, 0.4, Color.WHITE, 1), CoolImageBackgroundMode.Zoom)
+                new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/bandori girl hoeh.gif"), 0.0, 0.4, 0.4, Color.WHITE, 1), CoolImageBackgroundMode.Zoom)
             )
         };
         screenManager = new ScreenManager(screens);
