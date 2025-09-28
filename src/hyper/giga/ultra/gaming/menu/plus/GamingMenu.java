@@ -4,9 +4,11 @@ import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSolidColorBackground;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.SeparatorMenuItem;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.TextMenuItem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -52,21 +54,30 @@ public class GamingMenu
                             Color.LIGHT_GRAY,
                             1,
                             80,
-                            Alignment.Right, 10, 0),
+                            Alignment.Right, 10, 0
+                    ),
                     new SeparatorMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
                             MenuItem.BACKGROUND_SELECTED_DEFAULT,
                             Color.LIGHT_GRAY,
                             1,
                             80,
-                            Alignment.Left, 10, 0),
+                            Alignment.Left, 10, 0
+                    ),
                     new SeparatorMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
                             new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 0.2, 0.2, Color.WHITE, 5), CoolImageBackgroundMode.Tile),
                             Color.LIGHT_GRAY,
                             1,
                             80,
-                            Alignment.Center, 0, 0)
+                            Alignment.Center, 0, 0
+                    ),
+                    new TextMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            new CoolText("this is the future", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, 90.0),
+                            Alignment.Center, 0, 0
+                    )
                 },
                 DEFAULT_WIDTH,
                 DEFAULT_HEIGHT,
