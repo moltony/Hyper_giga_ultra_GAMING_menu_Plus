@@ -1,11 +1,10 @@
 package hyper.giga.ultra.gaming.menu.plus;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSolidColorBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.ImageMenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.SeparatorMenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.TextMenuItem;
@@ -66,7 +65,7 @@ public class GamingMenu
                     ),
                     new SeparatorMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
-                            new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 0.2, 0.2, Color.WHITE, 5), CoolImageBackgroundMode.Tile),
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
                             Color.LIGHT_GRAY,
                             1,
                             80,
@@ -75,7 +74,13 @@ public class GamingMenu
                     new TextMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
                             MenuItem.BACKGROUND_SELECTED_DEFAULT,
-                            new CoolText("this is the future", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, 90.0),
+                            new CoolText("this is the future", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, 25.0),
+                            Alignment.Center, 0, 0
+                    ),
+                    new ImageMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 0.4, 0.4, Color.WHITE, 5),
                             Alignment.Center, 0, 0
                     )
                 },
