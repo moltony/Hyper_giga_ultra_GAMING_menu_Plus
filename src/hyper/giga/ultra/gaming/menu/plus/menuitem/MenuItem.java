@@ -4,11 +4,12 @@ import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSolidColorBackground;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Optional;
 
 public abstract class MenuItem
 {
-    private CoolBackground backgroundNormal;
-    private CoolBackground backgroundSelected;
+    private Optional<CoolBackground> backgroundNormal;
+    private Optional<CoolBackground> backgroundSelected;
     
     protected int height;
     
@@ -18,23 +19,26 @@ public abstract class MenuItem
     
     public MenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected)
     {
-        this.backgroundNormal = backgroundNormal;
-        this.backgroundSelected = backgroundSelected;
+        this.backgroundNormal = Optional.ofNullable(backgroundNormal);
+        this.backgroundSelected = Optional.ofNullable(backgroundSelected);
         height = DEFAULT_HEIGHT;
     }
     
     public void update()
     {
-        backgroundNormal.update();
-        backgroundSelected.update();
+        backgroundNormal.ifPresent(bg -> bg.update());
+        backgroundSelected.ifPresent(bg -> bg.update());
     }
     
     public void render(Graphics g, int y, int width, boolean selected)
     {
         if (selected) {
-            backgroundSelected.render(g, 0, y, width, height);
+            backgroundSelected.ifPresentOrElse(
+                    bg -> bg.render(g, 0, y, width, height),
+                    () -> backgroundNormal.ifPresent(bg -> bg.render(g, 0, y, width, height))
+            );
         } else {
-            backgroundNormal.render(g, 0, y, width, height);
+            backgroundNormal.ifPresent(bg -> bg.render(g, 0, y, width, height));
         }
     }
     
