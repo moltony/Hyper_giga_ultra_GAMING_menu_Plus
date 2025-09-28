@@ -4,9 +4,10 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public class ScreenManager implements MouseMotionListener, KeyListener
+public class ScreenManager implements MouseMotionListener, KeyListener, MouseListener
 {
     private Screen[] screens;
     private int current;
@@ -55,6 +56,32 @@ public class ScreenManager implements MouseMotionListener, KeyListener
 
     @Override
     public void keyReleased(KeyEvent e)
+    {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e)
+    {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e)
+    {
+        screens[current].onMousePress(e.getButton());
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e)
+    {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e)
+    {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e)
     {
     }
 }

@@ -4,6 +4,7 @@ import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Screen
@@ -58,13 +59,24 @@ public class Screen
     
     public void onKeyPress(int keyCode)
     {
-        if (keyCode == KeyEvent.VK_UP) {
-            selected--;
-            if (selected < 0) {
-                selected = items.length - 1;
+        switch (keyCode) {
+            case KeyEvent.VK_UP -> {
+                selected--;
+                if (selected < 0) {
+                    selected = items.length - 1;
+                }
             }
-        } else if (keyCode == KeyEvent.VK_DOWN) {
-            selected = (selected + 1) % items.length;
+            case KeyEvent.VK_DOWN -> {
+                selected = (selected + 1) % items.length;
+            }
+            case KeyEvent.VK_ENTER -> {
+                items[selected].interact();
+            }
         }
+    }
+    
+    public void onMousePress(int button)
+    {
+        items[selected].interact();
     }
 }

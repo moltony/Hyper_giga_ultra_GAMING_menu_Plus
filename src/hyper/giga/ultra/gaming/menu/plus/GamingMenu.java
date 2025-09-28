@@ -62,7 +62,7 @@ public class GamingMenu
                             Alignment.Left, 10, 0),
                     new SeparatorMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
-                            new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 1.0, 0.5, Color.WHITE, 5), CoolImageBackgroundMode.Tile),
+                            new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 0.2, 0.2, Color.WHITE, 5), CoolImageBackgroundMode.Tile),
                             Color.LIGHT_GRAY,
                             1,
                             80,
@@ -76,6 +76,7 @@ public class GamingMenu
         screenManager = new ScreenManager(screens);
         canvas.addMouseMotionListener(screenManager);
         canvas.addKeyListener(screenManager);
+        canvas.addMouseListener(screenManager);
     }
     
     public void start()
