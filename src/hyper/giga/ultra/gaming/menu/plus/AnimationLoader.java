@@ -9,7 +9,6 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
-import javax.swing.JOptionPane;
 
 public class AnimationLoader
 {
@@ -49,8 +48,7 @@ public class AnimationLoader
             }
             return frameArray;
         } catch (IOException exc) {
-            JOptionPane.showMessageDialog(null, String.format("Unable to load GIF file %s: %s", path, exc.toString()), GamingMenu.SOFTWARE_NAME, JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
+            ErrorHandler.handleError(exc, exc.toString());
             return null;
         }
     }

@@ -1,6 +1,6 @@
 package hyper.giga.ultra.gaming.menu.plus.cool;
 
-import hyper.giga.ultra.gaming.menu.plus.GamingMenu;
+import hyper.giga.ultra.gaming.menu.plus.ErrorHandler;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -8,7 +8,6 @@ import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 public class CoolImage
 {
@@ -52,8 +51,7 @@ public class CoolImage
         try {
             this.images = new BufferedImage[] {ImageIO.read(new File(imagePath))};
         } catch (IOException exc) {
-            JOptionPane.showMessageDialog(null, String.format("Failed to load image %s: %s", imagePath, exc.toString()), GamingMenu.SOFTWARE_NAME, JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
+            ErrorHandler.handleError(exc, String.format("Failed to load image %s", imagePath));
         }
         this.angle = angle;
         this.scaleX = scaleX;
