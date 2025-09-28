@@ -12,11 +12,10 @@ import javax.swing.JOptionPane;
 
 public class CoolImage
 {
-    public BufferedImage[] images;
-    public double angle;
-    public double scaleX, scaleY;
-    public Color tint;
-    
+    private BufferedImage[] images;
+    private double angle;
+    private double scaleX, scaleY;
+    private Color tint;
     private int currentFrame;
     private int tickCounter;
     private int frameDelay;
@@ -31,6 +30,8 @@ public class CoolImage
         this.frameDelay = frameDelay;
         this.tickCounter = 0;
         this.currentFrame = 0;
+        
+        validateImages();
     }
     
     public CoolImage(BufferedImage image, double angle, double scaleX, double scaleY, Color tint)
@@ -61,6 +62,8 @@ public class CoolImage
         this.frameDelay = 0;
         this.tickCounter = 0;
         this.currentFrame = 0;
+        
+        validateImages();
     }
     
     public void update()
@@ -73,6 +76,11 @@ public class CoolImage
     }
     
     public void render(Graphics g, int x, int y)
+    {
+        renderScaled(g, x, y, scaleX, scaleY);
+    }
+    
+    public void renderScaled(Graphics g, int x, int y, double scaleX, double scaleY)
     {
         Graphics2D g2d = (Graphics2D)g;
         
@@ -93,5 +101,52 @@ public class CoolImage
         g2d.drawImage(images[currentFrame], op, x, y);
         
         g2d.setTransform(oldTransform);
+    }
+    
+    public double getWidth()
+    {
+        return (double)images[0].getWidth();
+    }
+    
+    public double getHeight()
+    {
+        return (double)images[0].getHeight();
+    }
+    
+    public double getScaledWidth()
+    {
+        return (double)images[0].getWidth() * scaleX;
+    }
+    
+    public double getScaledHeight()
+    {
+        return (double)images[0].getHeight() * scaleY;
+    }
+    
+    public double getScaleX()
+    {
+        return scaleX;
+    }
+    
+    public double getScaleY()
+    {
+        return scaleY;
+    }
+    
+    private void validateImages()
+    {        
+        // As much as I like customization, images all having different size is stupid.
+
+        if (images.length <= 1) {
+            return;
+        }
+        
+        int firstWidth = images[0].getWidth();
+        int firstHeight = images[0].getHeight();
+        for (BufferedImage image : images) {
+            if (image.getWidth() != firstWidth || image.getHeight() != firstHeight) {
+                throw new IllegalArgumentException("All frames of a cool image must be the same dimensions");
+            }
+        }
     }
 }
