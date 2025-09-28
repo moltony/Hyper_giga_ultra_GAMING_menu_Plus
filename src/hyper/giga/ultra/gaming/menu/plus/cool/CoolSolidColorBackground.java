@@ -13,6 +13,11 @@ public class CoolSolidColorBackground implements CoolBackground
     }
     
     @Override
+    public void update()
+    {
+    }
+    
+    @Override
     public void render(Graphics g, int x, int y, int width, int height)
     {
         g.setColor(color);

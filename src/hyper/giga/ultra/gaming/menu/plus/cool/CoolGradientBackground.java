@@ -21,6 +21,11 @@ public class CoolGradientBackground implements CoolBackground
     }
     
     @Override
+    public void update()
+    {
+    }
+    
+    @Override
     public void render(Graphics g, int x, int y, int width, int height)
     {
         Graphics2D g2d = (Graphics2D)g;

@@ -25,6 +25,8 @@ public abstract class MenuItem
     
     public void update()
     {
+        backgroundNormal.update();
+        backgroundSelected.update();
     }
     
     public void render(Graphics g, int y, int width, boolean selected)
