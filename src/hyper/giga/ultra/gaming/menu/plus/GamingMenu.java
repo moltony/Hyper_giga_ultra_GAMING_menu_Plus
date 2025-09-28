@@ -117,7 +117,7 @@ public class GamingMenu
         double delta = 0;
         long lastTime = System.nanoTime();
         
-        window.requestFocus();
+        canvas.requestFocus();
         
         while (running) {
             long now = System.nanoTime();
@@ -148,6 +148,7 @@ public class GamingMenu
             
             window.dispose();
             createWindow(screenManager.getScreenWidth(), screenManager.getScreenHeight());
+            canvas.requestFocus();
         }
     }
     

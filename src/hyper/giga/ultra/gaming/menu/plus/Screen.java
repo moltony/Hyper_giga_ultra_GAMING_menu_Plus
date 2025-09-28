@@ -25,7 +25,7 @@ public class Screen
         this.width = width;
         this.height = height;
         this.bg = bg;
-        selected = -1;
+        selected = 0;
         closeRequested = false;
         switchScreenRequested = false;
         requestedScreenID = 0;
@@ -76,6 +76,8 @@ public class Screen
     
     public void onKeyPress(int keyCode)
     {
+        System.out.println(keyCode);
+        
         switch (keyCode) {
             case KeyEvent.VK_UP -> {
                 selected--;
@@ -87,14 +89,14 @@ public class Screen
                 selected = (selected + 1) % items.length;
             }
             case KeyEvent.VK_ENTER -> {
-                handleInteraction(items[selected].interact());
+                handleInteraction();
             }
         }
     }
     
     public void onMousePress(int button)
     {
-        handleInteraction(items[selected].interact());
+        handleInteraction();
     }
 
     public boolean isSwitchScreenRequested()
@@ -122,8 +124,13 @@ public class Screen
         return height;
     }
     
-    private void handleInteraction(MenuItemInteractionResult interactionResult)
+    private void handleInteraction()
     {
+        if (selected < 0 || selected >= items.length) {
+            return;
+        }
+        
+        MenuItemInteractionResult interactionResult = items[selected].interact();
         switch (interactionResult.getType()) {
             case Exit -> {
                 closeRequested = true;
@@ -131,6 +138,7 @@ public class Screen
             case SwitchScreen -> {
                 switchScreenRequested = true;
                 requestedScreenID = interactionResult.getScreenID();
+                selected = 0;
             }
         }
     }
