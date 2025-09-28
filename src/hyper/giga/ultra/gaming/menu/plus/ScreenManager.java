@@ -27,6 +27,11 @@ public class ScreenManager implements MouseMotionListener, KeyListener, MouseLis
     {
         screens[current].render(g);
     }
+    
+    public boolean isCloseRequested()
+    {
+        return screens[current].isCloseRequested();
+    }
 
     //
     // events

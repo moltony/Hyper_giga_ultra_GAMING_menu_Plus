@@ -42,8 +42,9 @@ public abstract class MenuItem
         }
     }
     
-    public void interact()
+    public boolean interact()
     {
+        return false;
     }
     
     public int getHeight()

@@ -3,6 +3,9 @@ package hyper.giga.ultra.gaming.menu.plus;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.LauncherMenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import javax.swing.*;
 import java.awt.*;
@@ -42,6 +45,17 @@ public class GamingMenu
         Screen[] screens = new Screen[] {
             new Screen(
                 new MenuItem[] {
+                    new LauncherMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/bandori girl hoeh.gif"), 0.0, 0.4, 0.4, Color.WHITE, 1),
+                            Alignment.Left, 0, 0,
+                            new CoolText("this is the future", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, -10.0),
+                            Alignment.Left, 0, 0,
+                            new String[] {"ristretto", "/home/moltony/Documents/picture"},
+                            "/home/moltony",
+                            true
+                    ),
                 },
                 DEFAULT_WIDTH,
                 DEFAULT_HEIGHT,
@@ -75,11 +89,17 @@ public class GamingMenu
             
             render();
         }
+        
+        window.dispose();
     }
     
     private void update()
     {
         screenManager.update();
+        
+        if (screenManager.isCloseRequested()) {
+            running = false;
+        }
     }
     
     private void render()
@@ -94,9 +114,5 @@ public class GamingMenu
         
         g.dispose();
         bufferStrategy.show();
-    }
-
-    private CoolImageBackgroundMode CoolImageBackgroundMode() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

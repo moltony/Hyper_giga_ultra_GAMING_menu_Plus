@@ -12,6 +12,7 @@ public class Screen
     private int height;
     private CoolBackground bg;
     private int selected;
+    private boolean closeRequested;
     
     public Screen(MenuItem[] items, int width, int height, CoolBackground bg)
     {
@@ -20,6 +21,7 @@ public class Screen
         this.height = height;
         this.bg = bg;
         selected = -1;
+        closeRequested = false;
     }
     
     public void update()
@@ -42,6 +44,15 @@ public class Screen
             y += item.getHeight();
         }
     }
+    
+    public boolean isCloseRequested()
+    {
+        return closeRequested;
+    }
+    
+    //
+    // events
+    //
     
     public void onMouseMove(int mouseX, int mouseY)
     {
@@ -69,13 +80,17 @@ public class Screen
                 selected = (selected + 1) % items.length;
             }
             case KeyEvent.VK_ENTER -> {
-                items[selected].interact();
+                if (items[selected].interact()) {
+                    closeRequested = true;
+                }
             }
         }
     }
     
     public void onMousePress(int button)
     {
-        items[selected].interact();
+        if (items[selected].interact()) {
+            closeRequested = true;
+        }
     }
 }
