@@ -1,6 +1,9 @@
 package hyper.giga.ultra.gaming.menu.plus;
 
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolSolidColorBackground;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.SeparatorMenuItem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -18,8 +21,8 @@ public class GamingMenu
     private final int DEFAULT_WIDTH = 640;
     private final int DEFAULT_HEIGHT = 480;
     
-    ScreenManager screenManager;
-
+    private ScreenManager screenManager;
+    
     public GamingMenu()
     {
         window = new JFrame(SOFTWARE_NAME);
@@ -37,7 +40,36 @@ public class GamingMenu
         
         canvas.createBufferStrategy(2);
         
-        Screen[] screens = new Screen[] {new Screen()};
+        Screen[] screens = new Screen[] {
+            new Screen(
+                new MenuItem[] {
+                    new SeparatorMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            Color.LIGHT_GRAY,
+                            1,
+                            80,
+                            Alignment.Right, 10, 0),
+                    new SeparatorMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            Color.LIGHT_GRAY,
+                            1,
+                            80,
+                            Alignment.Left, 10, 0),
+                    new SeparatorMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            Color.LIGHT_GRAY,
+                            1,
+                            80,
+                            Alignment.Center, 0, 0)
+                },
+                DEFAULT_WIDTH,
+                DEFAULT_HEIGHT,
+                new CoolSolidColorBackground(Color.BLACK)
+            )
+        };
         screenManager = new ScreenManager(screens);
     }
     
