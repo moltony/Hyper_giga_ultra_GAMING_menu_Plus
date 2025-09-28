@@ -42,9 +42,9 @@ public abstract class MenuItem
         }
     }
     
-    public boolean interact()
+    public MenuItemInteractionResult interact()
     {
-        return false;
+        return new MenuItemInteractionResult(0, MenuItemInteractionResultType.None);
     }
     
     public int getHeight()

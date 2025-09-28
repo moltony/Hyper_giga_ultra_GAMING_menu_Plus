@@ -2,6 +2,7 @@ package hyper.giga.ultra.gaming.menu.plus;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItemInteractionResultType;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
@@ -80,7 +81,7 @@ public class Screen
                 selected = (selected + 1) % items.length;
             }
             case KeyEvent.VK_ENTER -> {
-                if (items[selected].interact()) {
+                if (items[selected].interact().getType() == MenuItemInteractionResultType.Exit) {
                     closeRequested = true;
                 }
             }
@@ -89,7 +90,7 @@ public class Screen
     
     public void onMousePress(int button)
     {
-        if (items[selected].interact()) {
+        if (items[selected].interact().getType() == MenuItemInteractionResultType.Exit) {
             closeRequested = true;
         }
     }

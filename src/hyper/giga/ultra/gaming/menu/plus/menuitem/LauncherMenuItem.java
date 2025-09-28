@@ -22,7 +22,7 @@ public class LauncherMenuItem extends ImageWithTextMenuItem
     }
     
     @Override
-    public boolean interact()
+    public MenuItemInteractionResult interact()
     {
         ProcessBuilder builder = new ProcessBuilder(arguments);
         builder.directory(new File(workingDirectory));
@@ -32,6 +32,6 @@ public class LauncherMenuItem extends ImageWithTextMenuItem
             ErrorHandler.handleError(exc, String.format("Could not start process %s", String.join(" ", arguments)));
         }
         
-        return closeOnLaunch;
+        return closeOnLaunch ? MenuItemInteractionResult.EXIT : MenuItemInteractionResult.NONE;
     }
 }

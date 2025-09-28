@@ -5,6 +5,7 @@ import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.ExitMenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.LauncherMenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import javax.swing.*;
@@ -51,10 +52,18 @@ public class GamingMenu
                             new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/bandori girl hoeh.gif"), 0.0, 0.4, 0.4, Color.WHITE, 1),
                             Alignment.Left, 0, 0,
                             new CoolText("this is the future", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, -10.0),
-                            Alignment.Left, 0, 0,
+                            Alignment.Left, 100, 20,
                             new String[] {"ristretto", "/home/moltony/Documents/picture"},
                             "/home/moltony",
                             true
+                    ),
+                    new ExitMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            new CoolImage("/home/moltony/Documents/picture/Blue_circled_9.svg.png", 0.0, 0.4, 0.4, Color.WHITE),
+                            Alignment.Left, 0, 0,
+                            new CoolText("exit", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, -10.0),
+                            Alignment.Left, 100, 20
                     ),
                 },
                 DEFAULT_WIDTH,
