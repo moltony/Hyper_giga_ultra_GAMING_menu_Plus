@@ -27,14 +27,14 @@ public class Screen
         }
     }
     
-    public void render(Graphics g)
+    public void render(Graphics g, int mouseX, int mouseY)
     {
         bg.render(g, 0, 0, width, height);
         
         int y = 0;
         
         for (MenuItem item : items) {
-            item.render(g, y, width, false);
+            item.render(g, y, width, mouseY > y && mouseY < y + item.getHeight());
             y += item.getHeight();
         }
     }

@@ -71,6 +71,8 @@ public class GamingMenu
             )
         };
         screenManager = new ScreenManager(screens);
+        canvas.addMouseListener(screenManager);
+        canvas.addMouseMotionListener(screenManager);
     }
     
     public void start()
@@ -79,6 +81,8 @@ public class GamingMenu
 
         double delta = 0;
         long lastTime = System.nanoTime();
+        
+        window.requestFocus();
         
         while (running) {
             long now = System.nanoTime();
