@@ -30,21 +30,6 @@ public class GamingMenu
     
     public GamingMenu()
     {
-        window = new JFrame(SOFTWARE_NAME);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setUndecorated(true);
-        
-        canvas = new Canvas();
-        canvas.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
-        
-        window.add(canvas);
-        window.pack();
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-        
-        canvas.createBufferStrategy(2);
-        
         Screen[] screens = new Screen[] {
             new Screen(
                 new MenuItem[] {
@@ -99,6 +84,27 @@ public class GamingMenu
             )
         };
         screenManager = new ScreenManager(screens);
+        
+        createWindow(screenManager.getScreenWidth(), screenManager.getScreenHeight());
+    }
+    
+    private void createWindow(int width, int height)
+    {
+        window = new JFrame(SOFTWARE_NAME);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
+        window.setUndecorated(true);
+        
+        canvas = new Canvas();
+        canvas.setPreferredSize(new Dimension(width, height));
+        
+        window.add(canvas);
+        window.pack();
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+        
+        canvas.createBufferStrategy(2);
+        
         canvas.addMouseMotionListener(screenManager);
         canvas.addKeyListener(screenManager);
         canvas.addMouseListener(screenManager);
@@ -138,8 +144,10 @@ public class GamingMenu
         } else if (screenManager.isSwitchScreenRequested()) {
             int screenID = screenManager.getRequestedScreenID();
             screenManager.setCurrentScreen(screenID);
-            window.setSize(new Dimension(screenManager.getScreenWidth(), screenManager.getScreenHeight()));
             screenManager.resetSwitchScreenRequest();
+            
+            window.dispose();
+            createWindow(screenManager.getScreenWidth(), screenManager.getScreenHeight());
         }
     }
     
