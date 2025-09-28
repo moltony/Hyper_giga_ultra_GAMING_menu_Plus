@@ -27,6 +27,7 @@ public class Screen
         for (MenuItem item : items) {
             item.update();
         }
+        bg.update();
     }
     
     public void render(Graphics g)

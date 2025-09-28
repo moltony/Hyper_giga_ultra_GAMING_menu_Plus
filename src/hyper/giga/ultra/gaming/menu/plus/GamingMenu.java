@@ -1,6 +1,8 @@
 package hyper.giga.ultra.gaming.menu.plus;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSolidColorBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
@@ -86,7 +88,7 @@ public class GamingMenu
                 },
                 DEFAULT_WIDTH,
                 DEFAULT_HEIGHT,
-                new CoolSolidColorBackground(Color.BLACK)
+                new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/arknight girl middle finger.gif"), 0.0, 0.4, 0.4, Color.WHITE, 1), CoolImageBackgroundMode.Zoom)
             )
         };
         screenManager = new ScreenManager(screens);
@@ -135,5 +137,9 @@ public class GamingMenu
         
         g.dispose();
         bufferStrategy.show();
+    }
+
+    private CoolImageBackgroundMode CoolImageBackgroundMode() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

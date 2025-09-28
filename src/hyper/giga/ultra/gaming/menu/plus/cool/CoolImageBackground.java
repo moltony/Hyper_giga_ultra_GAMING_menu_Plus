@@ -29,7 +29,7 @@ public class CoolImageBackground implements CoolBackground
         // since when did they add this syntax to java wtf
         switch (mode) {
             case Center -> {
-                double targetX = ((double)x + (double)width / 2.0) + image.getScaledWidth() / 2.0;
+                double targetX = ((double)x + (double)width / 2.0) - image.getScaledWidth() / 2.0;
                 double targetY = ((double)y + (double)height / 2.0) - image.getScaledHeight() / 2.0;
                 image.render(g, (int)targetX, (int)targetY);
             }
@@ -39,9 +39,9 @@ public class CoolImageBackground implements CoolBackground
                 int countX = (int)Math.ceil((double)width / scaledWidth);
                 int countY = (int)Math.ceil((double)height / scaledHeight);
                 for (int i = 0; i < countX; i++) {
-                    double targetX = ((double)x + scaledWidth * (double)i) / image.getScaleX();
+                    double targetX = (double)x + scaledWidth * (double)i;
                     for (int j = 0; j < countY; j++) {
-                        double targetY = ((double)y + scaledHeight * (double)j) / image.getScaleY();
+                        double targetY = (double)y + scaledHeight * (double)j;
                         image.render(g, (int)targetX, (int)targetY);
                     }
                 }

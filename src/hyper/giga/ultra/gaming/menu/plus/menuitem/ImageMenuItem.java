@@ -32,16 +32,16 @@ public class ImageMenuItem extends MenuItem
         super.render(g, y, width, selected);
         
         int targetX = 0;
-        int targetY = (int)((double)(offsetY + y) / image.getScaleY());
+        int targetY = offsetY + y;
         switch (alignment) {
             case Center -> {
-                targetX = (int)(double)((width / 2 - (int)(image.getScaledWidth() / 2.0) + offsetX) / image.getScaleX());
+                targetX = (int)(double)((width / 2 - (int)(image.getScaledWidth() / 2.0) + offsetX));
             }
             case Left -> {
                 targetX = offsetX;
             }
             case Right -> {
-                targetX = (int)(double)((width - (int)image.getScaledWidth() - offsetX) / image.getScaleX());
+                targetX = (int)(double)((width - (int)image.getScaledWidth() - offsetX));
             }
         }
         

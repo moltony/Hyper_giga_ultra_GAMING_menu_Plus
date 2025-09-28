@@ -96,7 +96,7 @@ public class CoolImage
 
         g2d.rotate(Math.toRadians(angle), x + (images[currentFrame].getWidth() * scaleX) / 2.0, y + (images[currentFrame].getHeight() * scaleY) / 2.0);
         g2d.scale(scaleX, scaleY);
-        g2d.drawImage(images[currentFrame], op, x, y);
+        g2d.drawImage(images[currentFrame], op, (int)((double)x / scaleX), (int)((double)y / scaleY)); // something something scaling
         
         g2d.setTransform(oldTransform);
     }
