@@ -1,5 +1,6 @@
 package hyper.giga.ultra.gaming.menu.plus;
 
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolGradientBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
@@ -8,6 +9,7 @@ import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.ExitMenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.LauncherMenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.SwitchScreenMenuItem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -46,6 +48,22 @@ public class GamingMenu
         Screen[] screens = new Screen[] {
             new Screen(
                 new MenuItem[] {
+                    new SwitchScreenMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/arknight girl middle finger.gif"), 0.0, 0.4, 0.4, Color.WHITE, 2),
+                            Alignment.Left, 0, 0,
+                            new CoolText("Click here", new Font("Monospace", Font.PLAIN, 24), Color.WHITE, 0.0),
+                            Alignment.Left, 200, 20,
+                            1
+                    )
+                },
+                DEFAULT_WIDTH,
+                DEFAULT_HEIGHT,
+                new CoolGradientBackground(new Color[] {Color.CYAN, Color.MAGENTA, Color.YELLOW}, new float[] {0.0f, 0.5f, 1.0f}, 0)
+            ),
+            new Screen(
+                new MenuItem[] {
                     new LauncherMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
                             MenuItem.BACKGROUND_SELECTED_DEFAULT,
@@ -65,9 +83,18 @@ public class GamingMenu
                             new CoolText("exit", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, -10.0),
                             Alignment.Left, 100, 20
                     ),
+                    new SwitchScreenMenuItem(
+                            MenuItem.BACKGROUND_NORMAL_DEFAULT,
+                            MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/arknight girl middle finger.gif"), 0.0, 0.4, 0.4, Color.WHITE, 2),
+                            Alignment.Left, 0, 0,
+                            new CoolText("Click here", new Font("Monospace", Font.PLAIN, 24), Color.WHITE, 0.0),
+                            Alignment.Left, 200, 20,
+                            0
+                    )
                 },
-                DEFAULT_WIDTH,
-                DEFAULT_HEIGHT,
+                DEFAULT_WIDTH * 2,
+                DEFAULT_HEIGHT * 2,
                 new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 2.0, 2.0, Color.WHITE, 5), CoolImageBackgroundMode.Center)
             )
         };
@@ -108,6 +135,11 @@ public class GamingMenu
         
         if (screenManager.isCloseRequested()) {
             running = false;
+        } else if (screenManager.isSwitchScreenRequested()) {
+            int screenID = screenManager.getRequestedScreenID();
+            screenManager.setCurrentScreen(screenID);
+            window.setSize(new Dimension(screenManager.getScreenWidth(), screenManager.getScreenHeight()));
+            screenManager.resetSwitchScreenRequest();
         }
     }
     

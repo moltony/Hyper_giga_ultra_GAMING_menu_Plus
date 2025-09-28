@@ -2,7 +2,9 @@ package hyper.giga.ultra.gaming.menu.plus;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
-import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItemInteractionResultType;
+import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItemInteractionResult;
+import static hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItemInteractionResultType.Exit;
+import static hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItemInteractionResultType.SwitchScreen;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
@@ -14,6 +16,8 @@ public class Screen
     private CoolBackground bg;
     private int selected;
     private boolean closeRequested;
+    private boolean switchScreenRequested;
+    private int requestedScreenID;
     
     public Screen(MenuItem[] items, int width, int height, CoolBackground bg)
     {
@@ -23,6 +27,8 @@ public class Screen
         this.bg = bg;
         selected = -1;
         closeRequested = false;
+        switchScreenRequested = false;
+        requestedScreenID = 0;
     }
     
     public void update()
@@ -81,17 +87,51 @@ public class Screen
                 selected = (selected + 1) % items.length;
             }
             case KeyEvent.VK_ENTER -> {
-                if (items[selected].interact().getType() == MenuItemInteractionResultType.Exit) {
-                    closeRequested = true;
-                }
+                handleInteraction(items[selected].interact());
             }
         }
     }
     
     public void onMousePress(int button)
     {
-        if (items[selected].interact().getType() == MenuItemInteractionResultType.Exit) {
-            closeRequested = true;
+        handleInteraction(items[selected].interact());
+    }
+
+    public boolean isSwitchScreenRequested()
+    {
+        return switchScreenRequested;
+    }
+    
+    public void resetSwitchScreenRequest()
+    {
+        switchScreenRequested = false;
+    }
+
+    public int getRequestedScreenID()
+    {
+        return requestedScreenID;
+    }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
+    
+    private void handleInteraction(MenuItemInteractionResult interactionResult)
+    {
+        switch (interactionResult.getType()) {
+            case Exit -> {
+                closeRequested = true;
+            }
+            case SwitchScreen -> {
+                switchScreenRequested = true;
+                requestedScreenID = interactionResult.getScreenID();
+            }
         }
     }
 }

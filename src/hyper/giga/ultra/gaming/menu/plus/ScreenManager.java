@@ -32,6 +32,36 @@ public class ScreenManager implements MouseMotionListener, KeyListener, MouseLis
     {
         return screens[current].isCloseRequested();
     }
+    
+    public boolean isSwitchScreenRequested()
+    {
+        return screens[current].isSwitchScreenRequested();
+    }
+    
+    public int getRequestedScreenID()
+    {
+        return screens[current].getRequestedScreenID();
+    }
+    
+    public void resetSwitchScreenRequest()
+    {
+        screens[current].resetSwitchScreenRequest();
+    }
+    
+    public void setCurrentScreen(int screen)
+    {
+        current = screen;
+    }
+    
+    public int getScreenWidth()
+    {
+        return screens[current].getWidth();
+    }
+    
+    public int getScreenHeight()
+    {
+        return screens[current].getHeight();
+    }
 
     //
     // events
