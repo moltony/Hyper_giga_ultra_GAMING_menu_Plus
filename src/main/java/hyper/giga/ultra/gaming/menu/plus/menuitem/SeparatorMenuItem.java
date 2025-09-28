@@ -1,6 +1,7 @@
 package hyper.giga.ultra.gaming.menu.plus.menuitem;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -12,9 +13,9 @@ public class SeparatorMenuItem extends MenuItem
     private Alignment alignment;
     private int offsetX, offsetY;
     
-    public SeparatorMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, Color color, int thickness, int length, Alignment alignment, int offsetX, int offsetY)
+    public SeparatorMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, Color color, int thickness, int length, Alignment alignment, int offsetX, int offsetY)
     {
-        super(backgroundNormal, backgroundSelected);
+        super(backgroundNormal, backgroundSelected, selectionSound, interactionSound);
         this.color = color;
         this.thickness = thickness;
         this.length = length;

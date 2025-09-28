@@ -2,6 +2,7 @@ package hyper.giga.ultra.gaming.menu.plus.menuitem;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
 import java.awt.Graphics;
 
 public class ImageMenuItem extends MenuItem
@@ -10,9 +11,9 @@ public class ImageMenuItem extends MenuItem
     private Alignment alignment;
     private int offsetX, offsetY;
     
-    public ImageMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolImage image, Alignment alignment, int offsetX, int offsetY)
+    public ImageMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, CoolImage image, Alignment alignment, int offsetX, int offsetY)
     {
-        super(backgroundNormal, backgroundSelected);
+        super(backgroundNormal, backgroundSelected, selectionSound, interactionSound);
         this.image = image;
         this.alignment = alignment;
         this.offsetX = offsetX;

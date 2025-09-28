@@ -1,6 +1,7 @@
 package hyper.giga.ultra.gaming.menu.plus.menuitem;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import java.awt.Graphics;
 
@@ -10,9 +11,9 @@ public class TextMenuItem extends MenuItem
     private Alignment alignment;
     private int offsetX, offsetY;
     
-    public TextMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolText text, Alignment alignment, int offsetX, int offsetY)
+    public TextMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, CoolText text, Alignment alignment, int offsetX, int offsetY)
     {
-        super(backgroundNormal, backgroundSelected);
+        super(backgroundNormal, backgroundSelected, selectionSound, interactionSound);
         this.text = text;
         this.alignment = alignment;
         this.offsetX = offsetX;

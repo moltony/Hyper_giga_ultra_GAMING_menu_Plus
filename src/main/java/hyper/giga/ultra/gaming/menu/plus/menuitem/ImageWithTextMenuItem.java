@@ -2,6 +2,7 @@ package hyper.giga.ultra.gaming.menu.plus.menuitem;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import java.awt.Graphics;
 
@@ -10,12 +11,12 @@ public abstract class ImageWithTextMenuItem extends MenuItem
     protected ImageMenuItem image;
     protected TextMenuItem text;
     
-    public ImageWithTextMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolImage image, Alignment imageAlignment, int imageOffsetX, int imageOffsetY, CoolText text, Alignment textAlignment, int textOffsetX, int textOffsetY)
+    public ImageWithTextMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, CoolImage image, Alignment imageAlignment, int imageOffsetX, int imageOffsetY, CoolText text, Alignment textAlignment, int textOffsetX, int textOffsetY)
     {
-        super(backgroundNormal, backgroundSelected);
+        super(backgroundNormal, backgroundSelected, selectionSound, interactionSound);
         
-        this.text = new TextMenuItem(null, null, text, textAlignment, textOffsetX, textOffsetY);
-        this.image = new ImageMenuItem(null, null, image, imageAlignment, imageOffsetX, imageOffsetY);
+        this.text = new TextMenuItem(null, null, null, null, text, textAlignment, textOffsetX, textOffsetY);
+        this.image = new ImageMenuItem(null, null, null, null, image, imageAlignment, imageOffsetX, imageOffsetY);
     }
     
     @Override

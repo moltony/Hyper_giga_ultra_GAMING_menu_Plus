@@ -4,6 +4,7 @@ import hyper.giga.ultra.gaming.menu.plus.cool.CoolGradientBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.ExitMenuItem;
@@ -36,6 +37,7 @@ public class GamingMenu
                     new SwitchScreenMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
                             MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            null, null,
                             new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/arknight girl middle finger.gif"), 0.0, 0.4, 0.4, Color.WHITE, 2),
                             Alignment.Left, 0, 0,
                             new CoolText("Click here", new Font("Monospace", Font.PLAIN, 24), Color.WHITE, 0.0),
@@ -45,13 +47,15 @@ public class GamingMenu
                 },
                 DEFAULT_WIDTH,
                 DEFAULT_HEIGHT,
-                new CoolGradientBackground(new Color[] {Color.CYAN, Color.MAGENTA, Color.YELLOW}, new float[] {0.0f, 0.5f, 1.0f}, 0)
+                new CoolGradientBackground(new Color[] {Color.CYAN, Color.MAGENTA, Color.YELLOW}, new float[] {0.0f, 0.5f, 1.0f}, 0),
+                new CoolSound("/home/moltony/Documents/nun.wav"), null
             ),
             new Screen(
                 new MenuItem[] {
                     new LauncherMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
                             MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            null, null,
                             new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/bandori girl hoeh.gif"), 0.0, 0.4, 0.4, Color.WHITE, 1),
                             Alignment.Left, 0, 0,
                             new CoolText("this is the future", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, -10.0),
@@ -63,6 +67,7 @@ public class GamingMenu
                     new ExitMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
                             MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            null, null,
                             new CoolImage("/home/moltony/Documents/picture/Blue_circled_9.svg.png", 0.0, 0.4, 0.4, Color.WHITE),
                             Alignment.Left, 0, 0,
                             new CoolText("exit", new Font("Comic Sans MS", Font.PLAIN, 24), Color.YELLOW, -10.0),
@@ -71,6 +76,7 @@ public class GamingMenu
                     new SwitchScreenMenuItem(
                             MenuItem.BACKGROUND_NORMAL_DEFAULT,
                             MenuItem.BACKGROUND_SELECTED_DEFAULT,
+                            null, null,
                             new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/arknight girl middle finger.gif"), 0.0, 0.4, 0.4, Color.WHITE, 2),
                             Alignment.Left, 0, 0,
                             new CoolText("Click here", new Font("Monospace", Font.PLAIN, 24), Color.WHITE, 0.0),
@@ -80,7 +86,8 @@ public class GamingMenu
                 },
                 DEFAULT_WIDTH * 2,
                 DEFAULT_HEIGHT * 2,
-                new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 2.0, 2.0, Color.WHITE, 5), CoolImageBackgroundMode.Center, Color.BLACK)
+                new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 2.0, 2.0, Color.WHITE, 5), CoolImageBackgroundMode.Center, Color.BLACK),
+                null, null
             )
         };
         screenManager = new ScreenManager(screens);
