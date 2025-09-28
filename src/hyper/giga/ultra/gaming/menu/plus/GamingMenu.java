@@ -80,7 +80,7 @@ public class GamingMenu
                 },
                 DEFAULT_WIDTH * 2,
                 DEFAULT_HEIGHT * 2,
-                new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 2.0, 2.0, Color.WHITE, 5), CoolImageBackgroundMode.Center)
+                new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 2.0, 2.0, Color.WHITE, 5), CoolImageBackgroundMode.Center, Color.BLACK)
             )
         };
         screenManager = new ScreenManager(screens);

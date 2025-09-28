@@ -1,5 +1,6 @@
 package hyper.giga.ultra.gaming.menu.plus.cool;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -8,11 +9,13 @@ public class CoolImageBackground implements CoolBackground
 {
     private CoolImage image;
     private CoolImageBackgroundMode mode;
+    private Color backgroundColor;
     
-    public CoolImageBackground(CoolImage image, CoolImageBackgroundMode mode)
+    public CoolImageBackground(CoolImage image, CoolImageBackgroundMode mode, Color backgroundColor)
     {
         this.image = image;
         this.mode = mode;
+        this.backgroundColor = backgroundColor;
     }
     
     public void update()
@@ -25,6 +28,9 @@ public class CoolImageBackground implements CoolBackground
     {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setClip(new Rectangle(x, y, width, height));
+        
+        g.setColor(backgroundColor);
+        g.fillRect(x, y, width, height);
         
         // since when did they add this syntax to java wtf
         switch (mode) {
