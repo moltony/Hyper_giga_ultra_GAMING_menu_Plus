@@ -8,14 +8,11 @@ public class ScreenManager extends MouseInputAdapter
 {
     private Screen[] screens;
     private int current;
-    private int mouseX, mouseY;
     
     public ScreenManager(Screen[] screens)
     {
         this.screens = screens;
         current = 0;
-        mouseX = 0;
-        mouseY = 0;
     }
     
     public void update()
@@ -25,7 +22,7 @@ public class ScreenManager extends MouseInputAdapter
     
     public void render(Graphics g)
     {
-        screens[current].render(g, mouseX, mouseY);
+        screens[current].render(g);
     }
 
     //
@@ -35,7 +32,6 @@ public class ScreenManager extends MouseInputAdapter
     @Override
     public void mouseMoved(MouseEvent e)
     {
-        mouseX = e.getX();
-        mouseY = e.getY();
+        screens[current].onMouseMove(e.getX(), e.getY());
     }
 }

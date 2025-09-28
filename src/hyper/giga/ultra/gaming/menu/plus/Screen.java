@@ -11,6 +11,7 @@ public class Screen
     private int width;
     private int height;
     private CoolBackground bg;
+    private int selected;
     
     public Screen(MenuItem[] items, int width, int height, CoolBackground bg)
     {
@@ -18,6 +19,7 @@ public class Screen
         this.width = width;
         this.height = height;
         this.bg = bg;
+        selected = -1;
     }
     
     public void update()
@@ -27,14 +29,28 @@ public class Screen
         }
     }
     
-    public void render(Graphics g, int mouseX, int mouseY)
+    public void render(Graphics g)
     {
         bg.render(g, 0, 0, width, height);
         
         int y = 0;
         
-        for (MenuItem item : items) {
-            item.render(g, y, width, mouseY > y && mouseY < y + item.getHeight());
+        for (int i = 0; i < items.length; i++) {
+            MenuItem item = items[i];
+            item.render(g, y, width, selected == i);
+            y += item.getHeight();
+        }
+    }
+    
+    public void onMouseMove(int mouseX, int mouseY)
+    {
+        selected = -1;
+        int y = 0;
+        for (int i = 0; i < items.length; i++) {
+            MenuItem item = items[i];
+            if (mouseY > y && mouseY < y + item.getHeight()) {
+                selected = i;
+            }                
             y += item.getHeight();
         }
     }
