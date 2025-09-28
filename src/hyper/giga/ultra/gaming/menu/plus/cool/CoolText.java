@@ -27,9 +27,17 @@ public class CoolText
         
         AffineTransform oldTransform = g2d.getTransform();
         
-        g2d.rotate(Math.toRadians(angle), x, y);
+        int pixelWidth = getPixelWidth(g);
+        g2d.rotate(Math.toRadians(angle), x + pixelWidth / 2, y);
         g2d.drawString(text, x, y);
         
         g2d.setTransform(oldTransform);
+    }
+    
+    public int getPixelWidth(Graphics g)
+    {
+        g.setFont(font);
+        FontMetrics metrics = g.getFontMetrics(font);
+        return metrics.stringWidth(text);
     }
 }
