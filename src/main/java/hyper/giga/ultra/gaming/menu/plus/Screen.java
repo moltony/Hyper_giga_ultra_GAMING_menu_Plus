@@ -85,8 +85,6 @@ public class Screen
     
     public void onKeyPress(int keyCode)
     {
-        System.out.println(keyCode);
-        
         switch (keyCode) {
             case KeyEvent.VK_UP -> {
                 selected--;
