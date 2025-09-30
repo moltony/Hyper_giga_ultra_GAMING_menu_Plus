@@ -24,8 +24,6 @@ public class GamingMenu
     public static final String SOFTWARE_NAME = "Hyper giga ultra GAMING menu Plus";
     
     private final double TARGET_FPS = 60.0;
-    private final int DEFAULT_WIDTH = 640;
-    private final int DEFAULT_HEIGHT = 480;
     
     private ScreenManager screenManager;
     
@@ -45,8 +43,8 @@ public class GamingMenu
                             1
                     )
                 },
-                DEFAULT_WIDTH,
-                DEFAULT_HEIGHT,
+                640,
+                480,
                 new CoolGradientBackground(new Color[] {Color.CYAN, Color.MAGENTA, Color.YELLOW}, new float[] {0.0f, 0.5f, 1.0f}, 0),
                 new CoolSound("/home/moltony/Documents/nun.wav"), null
             ),
@@ -84,13 +82,13 @@ public class GamingMenu
                             0
                     )
                 },
-                DEFAULT_WIDTH * 2,
-                DEFAULT_HEIGHT * 2,
+                640*2,
+                480*2,
                 new CoolImageBackground(new CoolImage(AnimationLoader.loadGIF("/home/moltony/Documents/picture/nadeshiko eat.gif"), 0.0, 2.0, 2.0, Color.WHITE, 5), CoolImageBackgroundMode.Center, Color.BLACK),
                 null, null
             )
         };
-        screenManager = new ScreenManager(screens);
+        screenManager = new ScreenManager(ConfigurationLoader.loadConfiguration("/home/moltony/Documents/hgugmp.toml"));
         
         createWindow(screenManager.getScreenWidth(), screenManager.getScreenHeight());
     }
@@ -165,7 +163,7 @@ public class GamingMenu
         Graphics g = bufferStrategy.getDrawGraphics();
         
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        g.fillRect(0, 0, screenManager.getScreenWidth(), screenManager.getScreenHeight());
         
         screenManager.render(g);
         
