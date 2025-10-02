@@ -1,159 +1,155 @@
 package hyper.giga.ultra.gaming.menu.plus;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSolidColorBackground;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedList;
-import javax.swing.JOptionPane;
-import org.tomlj.Toml;
-import org.tomlj.TomlParseResult;
-import org.tomlj.TomlTable;
+import java.util.ArrayList;
+
 
 public class ConfigurationLoader
 {
+    //
     // Default configuration values
+    //
+    
     private static final CoolSolidColorBackground DEFAULT_SCREEN_BACKGROUND = new CoolSolidColorBackground(Color.BLACK);
     private static final int DEFAULT_SCREEN_WIDTH = 480;
     private static final int DEFAULT_SCREEN_HEIGHT = 360;
+
+    //
+    // various json-related utilities
+    //
     
-    private static void showConfigurationError(String configurationFile, String error)
+    private static JsonElement jsonGetOrNull(String property, JsonObject object)
     {
-        JOptionPane.showMessageDialog(null, String.format("Errors found when parsing configuration file %s: %s", configurationFile, error), GamingMenu.SOFTWARE_NAME, JOptionPane.ERROR_MESSAGE);
-        System.exit(1);
+        JsonElement element = object.get(property);
+        return (element == null || element.isJsonNull()) ? null : element;
     }
     
-    private static int parseColorValue(String configurationFile, TomlTable colorTable, String colorKey)
+    private static int jsonGetOrDefaultInt(String property, JsonObject object, int defaultValue)
     {
-        int value = colorTable.getLong(colorKey).intValue();
-        if (value > 255 || value < 0) {
-            showConfigurationError(configurationFile, String.format("Invalid color value: %d", value));
-            return -1;
+        JsonElement element = jsonGetOrNull(property, object);
+        return element == null ? defaultValue : element.getAsInt();
+    }
+    
+    //
+    // various thing parsers
+    //
+    
+    private static int parseColorValue(JsonElement element)
+    {
+        if (element == null || element.isJsonNull() || !element.isJsonPrimitive()) {
+            throw new IllegalArgumentException("Color value not present or has incorrect type");
         }
         
+        int value = element.getAsInt();
+        if (value < 0 || value > 255) {
+            throw new IllegalArgumentException("Color value must not be negative or higher than 255");
+        }
+
         return value;
     }
     
-    private static CoolBackground loadBackground(String configurationFile, TomlTable screenTable)
+    private static Color parseColor(JsonElement element, Color defaultValue)
     {
-        CoolBackground background = DEFAULT_SCREEN_BACKGROUND;
-        
-        TomlTable backgroundTable = screenTable.getTable("background");
-        if (backgroundTable == null) {
-            return background;
+        if (element == null || element.isJsonNull()) {
+            return defaultValue;
         }
-        
-        String backgroundType = backgroundTable.getString("type");
-        if (backgroundType == null) {
-            showConfigurationError(configurationFile, "Background must have a type");
+        if (!element.isJsonObject()) {
+            throw new IllegalArgumentException("Color JSON element must be of object type");
         }
+        JsonObject colorObject = element.getAsJsonObject();
         
-        switch (backgroundType) {
+        int r = parseColorValue(colorObject.get("r"));
+        int g = parseColorValue(colorObject.get("g"));
+        int b = parseColorValue(colorObject.get("b"));
+        return new Color(r, g, b);
+    }
+    
+    private static CoolBackground parseBackground(JsonElement element, CoolBackground defaultValue)
+    {
+        if (element == null || element.isJsonNull()) {
+            return defaultValue;
+        }
+        if (!element.isJsonObject()) {
+            throw new IllegalArgumentException("Background JSON element must be of object type");
+        }
+        JsonObject backgroundObject = element.getAsJsonObject();
+        
+        JsonElement typeElement = backgroundObject.get("type");
+        if (typeElement == null || typeElement.isJsonNull()) {
+            throw new IllegalArgumentException("Background type must be present and not be null");
+        }
+        String typeString = typeElement.getAsString();
+
+        switch (typeString) {
             case "solid" -> {
-                TomlTable colorTable = backgroundTable.getTable("color");
-                int r = parseColorValue(configurationFile, colorTable, "r");
-                int g = parseColorValue(configurationFile, colorTable, "g");
-                int b = parseColorValue(configurationFile, colorTable, "b");
-                background = new CoolSolidColorBackground(new Color(r, g, b));
+                Color color = parseColor(backgroundObject.get("color"), Color.BLACK);
+                return new CoolSolidColorBackground(color);
             }
             case "gradient" -> {
-                
             }
             case "image" -> {
                 
             }
             default -> {
-                showConfigurationError(configurationFile, String.format("Invalid background type %s", backgroundType));
+                throw new IllegalArgumentException(String.format("Unknown background type: %s", typeString));
             }
         }
         
-        return background;
+        return null;
+    }
+    
+    private static Screen parseScreen(JsonObject screenElement) throws IllegalArgumentException
+    {
+        int width = jsonGetOrDefaultInt("width", screenElement, DEFAULT_SCREEN_WIDTH);
+        int height = jsonGetOrDefaultInt("height", screenElement, DEFAULT_SCREEN_HEIGHT);
+        CoolBackground background = parseBackground(screenElement.get("background"), DEFAULT_SCREEN_BACKGROUND);
+        
+        return new Screen(
+                new MenuItem[] {},
+                width,
+                height,
+                background,
+                null, null
+        );
     }
     
     public static Screen[] loadConfiguration(String configurationFile)
     {
-        try {
-            Path source = Paths.get(configurationFile);
-            TomlParseResult result = Toml.parse(source);
-            
-            LinkedList<String> errorStrings = new LinkedList<>();
-            result.errors().forEach(error -> {
-                errorStrings.add(error.toString());
-            });
-            if (!errorStrings.isEmpty()) {
-                showConfigurationError(configurationFile, String.join(", ", errorStrings));
-                return null;
+        // Read the file
+        String configFileContent;
+        try (BufferedReader reader = new BufferedReader(new FileReader(configurationFile))) {
+            StringBuilder builder = new StringBuilder();
+            String line = reader.readLine();
+            while (line != null) {
+                builder.append(line);
+                builder.append(System.lineSeparator());
+                line = reader.readLine();
             }
-            
-            LinkedList<Screen> screens = new LinkedList<>();
-            
-            for (int i = 0;; i++) {
-                TomlTable screenTable = result.getTable(String.format("screen%d", i));
-                
-                // If the screen table is null, that means there are no more screens.
-                if (screenTable == null) {
-                    break;
-                }
-                
-                // Parse screen dimensions
-                TomlTable sizeTable = screenTable.getTable("size");
-                int screenWidth;
-                if (sizeTable.get("w") != null) {
-                    screenWidth = sizeTable.getLong("w").intValue();
-                    if (screenWidth <= 0) {
-                        showConfigurationError(configurationFile, "Screen width cannot be negative or zero");
-                    }
-                } else {
-                    screenWidth = DEFAULT_SCREEN_WIDTH;
-                }
-
-                int screenHeight;
-                if (sizeTable.get("h") != null) {
-                    screenHeight = sizeTable.getLong("h").intValue();
-                    if (screenHeight <= 0) {
-                        showConfigurationError(configurationFile, "Screen height cannot be negative or zero");
-                    }
-                } else {
-                    screenHeight = DEFAULT_SCREEN_HEIGHT;
-                }
-                
-                // Parse sounds
-                TomlTable soundTable = screenTable.getTable("sound");
-                CoolSound selectionSound = null;
-                CoolSound interactionSound = null;
-                if (soundTable != null) {
-                    String selectionSoundPath = soundTable.getString("select");
-                    if (selectionSoundPath != null) {
-                        selectionSound = new CoolSound(selectionSoundPath);
-                    }
-                    
-                    String interactionSoundPath = soundTable.getString("interact");
-                    if (interactionSoundPath != null) {
-                        interactionSound = new CoolSound(interactionSoundPath);
-                    }
-                }
-                
-                // Parse screen background
-                CoolBackground screenBackground = loadBackground(configurationFile, screenTable);
-                
-                screens.add(new Screen(
-                        new MenuItem[] {},
-                        screenWidth,
-                        screenHeight,
-                        screenBackground,
-                        selectionSound,
-                        interactionSound
-                ));
-            }
-            
-            return screens.toArray(Screen[]::new);
+            configFileContent = builder.toString();
         } catch (IOException exc) {
-            ErrorHandler.handleError(exc, String.format("Error when loading configuration file %s", configurationFile));
+            exc.printStackTrace();
+            System.exit(1);
+            return null;
         }
-        return null;
+        
+        JsonObject root = JsonParser.parseString(configFileContent).getAsJsonObject();
+        JsonArray screensArray = root.get("screens").getAsJsonArray();
+        ArrayList screens = new ArrayList<>();
+        for (JsonElement screenElement : screensArray) {
+            JsonObject screenObject = screenElement.getAsJsonObject();
+            screens.add(parseScreen(screenObject));
+        }
+        
+        return (Screen[])screens.toArray(new Screen[0]);
     }
 }

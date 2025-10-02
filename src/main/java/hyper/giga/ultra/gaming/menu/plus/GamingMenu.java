@@ -88,7 +88,7 @@ public class GamingMenu
                 null, null
             )
         };
-        screenManager = new ScreenManager(ConfigurationLoader.loadConfiguration("/home/moltony/Documents/hgugmp.toml"));
+        screenManager = new ScreenManager(ConfigurationLoader.loadConfiguration("/home/moltony/Documents/hgugmp.json"));
         
         createWindow(screenManager.getScreenWidth(), screenManager.getScreenHeight());
     }
