@@ -210,14 +210,44 @@ public class ConfigurationLoader
         }
     }
     
-    private static Screen parseScreen(JsonObject screenElement) throws IllegalArgumentException
+    private static MenuItem parseMenuItem(JsonObject itemObject)
     {
-        int width = jsonGetOrDefaultInt("width", screenElement, DEFAULT_SCREEN_WIDTH);
-        int height = jsonGetOrDefaultInt("height", screenElement, DEFAULT_SCREEN_HEIGHT);
-        CoolBackground background = parseBackground(screenElement.get("background"), DEFAULT_SCREEN_BACKGROUND);
+        return null; // todo
+    }
+    
+    private static Screen parseScreen(JsonObject screenObject) throws IllegalArgumentException
+    {
+        int width = jsonGetOrDefaultInt("width", screenObject, DEFAULT_SCREEN_WIDTH);
+        int height = jsonGetOrDefaultInt("height", screenObject, DEFAULT_SCREEN_HEIGHT);
+        CoolBackground background = parseBackground(screenObject.get("background"), DEFAULT_SCREEN_BACKGROUND);
+        
+        JsonElement itemsElement = screenObject.get("items");
+        MenuItem[] items;
+        if (itemsElement == null || itemsElement.isJsonNull()) {
+            // might as well not have any items. that's one way to customize idc
+            items = new MenuItem[0];
+        } else {
+            if (!itemsElement.isJsonArray()) {
+                throw new IllegalArgumentException("Items list must be of array type");
+            }
+            JsonArray itemsArray = itemsElement.getAsJsonArray();
+            int itemsArraySize = itemsArray.size();
+            items = new MenuItem[itemsArraySize];
+            
+            for (int i = 0; i < itemsArraySize; i++) {
+                JsonElement item = itemsArray.get(i);
+                // TODO it's unnecessary to check for isJsonNull and isJsonObject invidivually.
+                //      do this where we check for null + type.
+                if (item == null || !item.isJsonObject()) {
+                    throw new IllegalArgumentException("Menu item must be an object");
+                }
+                JsonObject itemObject = item.getAsJsonObject();
+                items[i] = parseMenuItem(itemObject);
+            }
+        }
         
         return new Screen(
-                new MenuItem[] {},
+                items,
                 width,
                 height,
                 background,
