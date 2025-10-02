@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolGradientBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSolidColorBackground;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import java.awt.Color;
@@ -40,6 +41,12 @@ public class ConfigurationLoader
         return element == null ? defaultValue : element.getAsInt();
     }
     
+    private static float jsonGetOrDefaultFloat(String property, JsonObject object, float defaultValue)
+    {
+        JsonElement element = jsonGetOrNull(property, object);
+        return element == null ? defaultValue : element.getAsFloat();
+    }
+    
     //
     // various thing parsers
     //
@@ -57,10 +64,13 @@ public class ConfigurationLoader
 
         return value;
     }
-    
+
     private static Color parseColor(JsonElement element, Color defaultValue)
     {
         if (element == null || element.isJsonNull()) {
+            if (defaultValue == null) {
+                throw new IllegalArgumentException("Color not present");
+            }
             return defaultValue;
         }
         if (!element.isJsonObject()) {
@@ -96,6 +106,39 @@ public class ConfigurationLoader
                 return new CoolSolidColorBackground(color);
             }
             case "gradient" -> {
+                // step 1 parse fractions
+                JsonElement fractionsElement = backgroundObject.get("fractions");
+                if (fractionsElement == null || !fractionsElement.isJsonArray()) {
+                    throw new IllegalArgumentException("Gradient background fractions must be an array");
+                }
+                JsonArray fractionsArray = fractionsElement.getAsJsonArray();
+                int fractionsArraySize = fractionsArray.size();
+                float[] fractions = new float[fractionsArraySize];
+                for (int i = 0; i < fractionsArraySize; i++) {
+                    JsonElement fractionElement = fractionsArray.get(i);
+                    if (!fractionElement.isJsonPrimitive()) {
+                        throw new IllegalArgumentException("Fractions array must only contain primitives");
+                    }
+                    fractions[i] = fractionElement.getAsFloat();
+                }
+                
+                // step 2 parse colors
+                JsonElement colorsElement = backgroundObject.get("colors");
+                if (colorsElement == null || !colorsElement.isJsonArray()) {
+                    throw new IllegalArgumentException("Gradient background colors must be an array");
+                }
+                JsonArray colorsArray = colorsElement.getAsJsonArray();
+                int colorsArraySize = colorsArray.size();
+                Color[] colors = new Color[colorsArraySize];
+                for (int i = 0; i < colorsArraySize; i++) {
+                    colors[i] = parseColor(colorsArray.get(i), null);
+                }
+                
+                // step 3 angle
+                float angle = jsonGetOrDefaultFloat("angle", backgroundObject, 0.0f);
+                
+                // step 4 put them together
+                return new CoolGradientBackground(colors, fractions, angle);
             }
             case "image" -> {
                 
