@@ -6,9 +6,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolGradientBackground;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
+import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSolidColorBackground;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -84,6 +88,39 @@ public class ConfigurationLoader
         return new Color(r, g, b);
     }
     
+    private static CoolImage parseImage(JsonElement element)
+    {
+        if (element == null || element.isJsonNull() || !element.isJsonObject()) {
+            throw new IllegalArgumentException("Image not present or has incorrect data type");
+        }
+        JsonObject imageObject = element.getAsJsonObject();
+        
+        String imageFile = imageObject.get("file").getAsString();
+        if (imageFile == null) {
+            throw new IllegalArgumentException("Image path not present");
+        }
+        
+        float angle = jsonGetOrDefaultFloat("angle", imageObject, 0.0f);
+
+        float scaleX = 1.0f;
+        float scaleY = 1.0f;
+        JsonElement scaleElement = imageObject.get("scale");
+        if (!(scaleElement == null || scaleElement.isJsonNull() || !scaleElement.isJsonObject())) {
+            JsonObject scaleObject = scaleElement.getAsJsonObject();
+            scaleX = scaleObject.get("x").getAsFloat();
+            scaleY = scaleObject.get("y").getAsFloat();
+        }
+        
+        Color tint = parseColor(imageObject.get("tint"), Color.WHITE);
+        int frameDelay = jsonGetOrDefaultInt("frame_delay", imageObject, 0);
+        
+        if (imageFile.toLowerCase().endsWith(".gif")) {
+            BufferedImage[] images = AnimationLoader.loadGIF(imageFile);
+            return new CoolImage(images, angle, scaleX, scaleY, tint, frameDelay);
+        }
+        return new CoolImage(imageFile, angle, scaleX, scaleY, tint);
+    }
+    
     private static CoolBackground parseBackground(JsonElement element, CoolBackground defaultValue)
     {
         if (element == null || element.isJsonNull()) {
@@ -141,14 +178,36 @@ public class ConfigurationLoader
                 return new CoolGradientBackground(colors, fractions, angle);
             }
             case "image" -> {
-                
+                CoolImage image = parseImage(backgroundObject.get("image"));
+                JsonElement modeStringObject = backgroundObject.get("mode");
+                CoolImageBackgroundMode mode = CoolImageBackgroundMode.Center;
+                if (!(modeStringObject == null || modeStringObject.isJsonNull() || !modeStringObject.isJsonPrimitive())) {
+                    String modeString = modeStringObject.getAsString();
+                    switch (modeString) {
+                        case "center" -> {
+                            mode = CoolImageBackgroundMode.Center;
+                        }
+                        case "zoom" -> {
+                            mode = CoolImageBackgroundMode.Zoom;
+                        }
+                        case "tile" -> {
+                            mode = CoolImageBackgroundMode.Tile;
+                        }
+                        case "stretch" -> {
+                            mode = CoolImageBackgroundMode.Stretch;
+                        }
+                        default -> {
+                            throw new IllegalArgumentException(String.format("Unknown image background mode: %s", modeString));
+                        }
+                    }
+                }
+                Color backgroundColor = parseColor(backgroundObject.get("color"), Color.BLACK);
+                return new CoolImageBackground(image, mode, backgroundColor);
             }
             default -> {
                 throw new IllegalArgumentException(String.format("Unknown background type: %s", typeString));
             }
         }
-        
-        return null;
     }
     
     private static Screen parseScreen(JsonObject screenElement) throws IllegalArgumentException
