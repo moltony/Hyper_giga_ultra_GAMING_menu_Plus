@@ -137,8 +137,7 @@ public class ConfigurationLoader
             }
             configFileContent = builder.toString();
         } catch (IOException exc) {
-            exc.printStackTrace();
-            System.exit(1);
+            ErrorHandler.handleError(exc, "Error reading configuration file");
             return null;
         }
         
@@ -147,7 +146,12 @@ public class ConfigurationLoader
         ArrayList screens = new ArrayList<>();
         for (JsonElement screenElement : screensArray) {
             JsonObject screenObject = screenElement.getAsJsonObject();
-            screens.add(parseScreen(screenObject));
+            try {
+                screens.add(parseScreen(screenObject));
+            } catch (IllegalArgumentException exc) {
+                ErrorHandler.handleError(exc, "Error parsing screen");
+                return null;
+            }
         }
         
         return (Screen[])screens.toArray(new Screen[0]);
