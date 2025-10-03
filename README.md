@@ -8,7 +8,10 @@ An infinitely customizable application launcher written in Java of all languages
 1. Get [Maven](https://maven.apache.org/)
    * Some IDEs just have it by default (such as NetBeans) so you don't even have to install it yourself if you use one
 1. Build the jar🫙🫙
-   * If you're using command line I'm pretty sure you just run `mvn clean package` and there should be a jar somewhere
+   * If you're using command line I'm pretty sure you just run `mvn clean package` and there should be a jar somewhere (probably in the `target` directory)
+1. Done
+
+Run it like `java -jar /path/to/Hyper_giga_ultra_GAMING_menu_Plus.jar <config file path>`
 
 ## Project structure
 
