@@ -27,9 +27,9 @@ public class GamingMenu
     
     private ScreenManager screenManager;
     
-    public GamingMenu()
+    public GamingMenu(String[] args)
     {
-        screenManager = new ScreenManager(ConfigurationLoader.loadConfiguration("/home/moltony/Documents/hgugmp.json"));
+        screenManager = new ScreenManager(ConfigurationLoader.loadConfiguration(args[0]));
         
         createWindow(screenManager.getScreenWidth(), screenManager.getScreenHeight());
     }
