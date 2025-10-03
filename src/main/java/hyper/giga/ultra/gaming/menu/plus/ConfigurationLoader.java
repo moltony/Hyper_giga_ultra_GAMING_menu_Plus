@@ -16,10 +16,8 @@ import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
 import hyper.giga.ultra.gaming.menu.plus.menuitem.SeparatorMenuItem;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -32,34 +30,6 @@ public class ConfigurationLoader
     private static final CoolSolidColorBackground DEFAULT_SCREEN_BACKGROUND = new CoolSolidColorBackground(Color.BLACK);
     private static final int DEFAULT_SCREEN_WIDTH = 480;
     private static final int DEFAULT_SCREEN_HEIGHT = 360;
-
-    //
-    // various json-related utilities
-    //
-    
-    private static JsonElement jsonGetOrNull(String property, JsonObject object)
-    {
-        JsonElement element = object.get(property);
-        return (element == null || element.isJsonNull()) ? null : element;
-    }
-    
-    private static int jsonGetOrDefaultInt(String property, JsonObject object, int defaultValue)
-    {
-        JsonElement element = jsonGetOrNull(property, object);
-        return element == null ? defaultValue : element.getAsInt();
-    }
-    
-    private static float jsonGetOrDefaultFloat(String property, JsonObject object, float defaultValue)
-    {
-        JsonElement element = jsonGetOrNull(property, object);
-        return element == null ? defaultValue : element.getAsFloat();
-    }
-    
-    private static String jsonGetOrDefaultString(String property, JsonObject object, String defaultValue)
-    {
-        JsonElement element = jsonGetOrNull(property, object);
-        return element == null ? defaultValue : element.getAsString();
-    }
     
     //
     // various thing parsers
@@ -120,7 +90,7 @@ public class ConfigurationLoader
             throw new IllegalArgumentException("Image path not present");
         }
         
-        float angle = jsonGetOrDefaultFloat("angle", imageObject, 0.0f);
+        float angle = JsonUtils.jsonGetOrDefaultFloat("angle", imageObject, 0.0f);
 
         float scaleX = 1.0f;
         float scaleY = 1.0f;
@@ -132,7 +102,7 @@ public class ConfigurationLoader
         }
         
         Color tint = parseColor(imageObject.get("tint"), Color.WHITE);
-        int frameDelay = jsonGetOrDefaultInt("frame_delay", imageObject, 0);
+        int frameDelay = JsonUtils.jsonGetOrDefaultInt("frame_delay", imageObject, 0);
         
         if (imageFile.toLowerCase().endsWith(".gif")) {
             BufferedImage[] images = AnimationLoader.loadGIF(imageFile);
@@ -195,7 +165,7 @@ public class ConfigurationLoader
                 }
                 
                 // step 3 angle
-                float angle = jsonGetOrDefaultFloat("angle", backgroundObject, 0.0f);
+                float angle = JsonUtils.jsonGetOrDefaultFloat("angle", backgroundObject, 0.0f);
                 
                 // step 4 put them together
                 return new CoolGradientBackground(colors, fractions, angle);
@@ -264,8 +234,8 @@ public class ConfigurationLoader
         }
         
         JsonObject offsetObject = offsetElement.getAsJsonObject();
-        int x = jsonGetOrDefaultInt("x", offsetObject, 0);
-        int y = jsonGetOrDefaultInt("y", offsetObject, 0);
+        int x = JsonUtils.jsonGetOrDefaultInt("x", offsetObject, 0);
+        int y = JsonUtils.jsonGetOrDefaultInt("y", offsetObject, 0);
         return new int[] {x, y};
     }
     
@@ -277,8 +247,8 @@ public class ConfigurationLoader
         }
         JsonObject soundsObject = soundsElement.getAsJsonObject();
         
-        String selectSoundPath = jsonGetOrDefaultString("select", soundsObject, null);
-        String interactSoundPath = jsonGetOrDefaultString("interact", soundsObject, null);
+        String selectSoundPath = JsonUtils.jsonGetOrDefaultString("select", soundsObject, null);
+        String interactSoundPath = JsonUtils.jsonGetOrDefaultString("interact", soundsObject, null);
         return new CoolSound[] {
             selectSoundPath == null ? null : new CoolSound(selectSoundPath),
             interactSoundPath == null ? null : new CoolSound(interactSoundPath)
@@ -288,8 +258,8 @@ public class ConfigurationLoader
     private static SeparatorMenuItem parseSeparator(JsonObject itemObject)
     {
         Color color = parseColor(itemObject.get("color"), Color.LIGHT_GRAY);
-        int thickness = jsonGetOrDefaultInt("thickness", itemObject, 1);
-        int length = jsonGetOrDefaultInt("length", itemObject, 80);
+        int thickness = JsonUtils.jsonGetOrDefaultInt("thickness", itemObject, 1);
+        int length = JsonUtils.jsonGetOrDefaultInt("length", itemObject, 80);
         Alignment alignment = parseAlignment(itemObject.get("alignment"));
         int[] offset = parseOffset(itemObject.get("offset"));
         CoolBackground[] backgrounds = parseMenuItemBackgrounds(itemObject);
@@ -326,8 +296,8 @@ public class ConfigurationLoader
     
     private static Screen parseScreen(JsonObject screenObject) throws IllegalArgumentException
     {
-        int width = jsonGetOrDefaultInt("width", screenObject, DEFAULT_SCREEN_WIDTH);
-        int height = jsonGetOrDefaultInt("height", screenObject, DEFAULT_SCREEN_HEIGHT);
+        int width = JsonUtils.jsonGetOrDefaultInt("width", screenObject, DEFAULT_SCREEN_WIDTH);
+        int height = JsonUtils.jsonGetOrDefaultInt("height", screenObject, DEFAULT_SCREEN_HEIGHT);
         CoolBackground background = parseBackground(screenObject.get("background"), DEFAULT_SCREEN_BACKGROUND);
         
         JsonElement itemsElement = screenObject.get("items");
@@ -387,7 +357,7 @@ public class ConfigurationLoader
                 screens.add(parseScreen(screenObject));
             } catch (IllegalArgumentException exc) {
                 ErrorHandler.handleError(exc, "Error parsing screen");
-                return null;
+                throw new RuntimeException();
             }
         }
         
