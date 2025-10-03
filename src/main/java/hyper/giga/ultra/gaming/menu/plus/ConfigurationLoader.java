@@ -17,6 +17,7 @@ import hyper.giga.ultra.gaming.menu.plus.menuitem.SeparatorMenuItem;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -369,22 +370,15 @@ public class ConfigurationLoader
     public static Screen[] loadConfiguration(String configurationFile)
     {
         // Read the file
-        String configFileContent;
-        try (BufferedReader reader = new BufferedReader(new FileReader(configurationFile))) {
-            StringBuilder builder = new StringBuilder();
-            String line = reader.readLine();
-            while (line != null) {
-                builder.append(line);
-                builder.append(System.lineSeparator());
-                line = reader.readLine();
-            }
-            configFileContent = builder.toString();
-        } catch (IOException exc) {
-            ErrorHandler.handleError(exc, "Error reading configuration file");
-            return null;
+        FileReader fileReader;
+        try {
+            fileReader = new FileReader(configurationFile);
+        } catch (FileNotFoundException exc) {
+            ErrorHandler.handleError(exc, "Configuration file not found");
+            throw new RuntimeException();
         }
         
-        JsonObject root = JsonParser.parseString(configFileContent).getAsJsonObject();
+        JsonObject root = JsonParser.parseReader(fileReader).getAsJsonObject();
         JsonArray screensArray = root.get("screens").getAsJsonArray();
         ArrayList<Screen> screens = new ArrayList<>();
         for (JsonElement screenElement : screensArray) {
