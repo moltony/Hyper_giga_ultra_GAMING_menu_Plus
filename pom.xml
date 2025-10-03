@@ -17,4 +17,7 @@
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>hyper.giga.ultra.gaming.menu.plus.Main</exec.mainClass>
     </properties>
+    <name>Hyper giga ultra GAMING menu Plus</name>
+    <description>The Hyper giga ultra GAMING menu Plus is an infinitely customizable
+application launcher.</description>
 </project>
