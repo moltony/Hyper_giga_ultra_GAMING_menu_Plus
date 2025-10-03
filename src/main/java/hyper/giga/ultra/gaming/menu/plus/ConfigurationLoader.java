@@ -386,7 +386,7 @@ public class ConfigurationLoader
         
         JsonObject root = JsonParser.parseString(configFileContent).getAsJsonObject();
         JsonArray screensArray = root.get("screens").getAsJsonArray();
-        ArrayList screens = new ArrayList<>();
+        ArrayList<Screen> screens = new ArrayList<>();
         for (JsonElement screenElement : screensArray) {
             JsonObject screenObject = screenElement.getAsJsonObject();
             try {
@@ -397,6 +397,6 @@ public class ConfigurationLoader
             }
         }
         
-        return (Screen[])screens.toArray(new Screen[0]);
+        return screens.toArray(Screen[]::new);
     }
 }
