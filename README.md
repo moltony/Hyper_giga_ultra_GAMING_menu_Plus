@@ -2,14 +2,13 @@
 
 An infinitely customizable application launcher written in Java of all languages.
 
-## Features
+## Installation
 
-* It's Hyper
-* It's giga
-* It's ultra
-* It's GAMING
-* It's a menu
-* It's Plus
+1. Make sure you have Java on your computer (if you play Minecraft you're good)
+1. Get [Maven](https://maven.apache.org/)
+   * Some IDEs just have it by default (such as NetBeans) so you don't even have to install it yourself if you use one
+1. Build the jar🫙🫙
+   * If you're using command line I'm pretty sure you just run `mvn clean package` and there should be a jar somewhere
 
 ## Project structure
 
