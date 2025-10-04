@@ -28,4 +28,10 @@ public class JsonUtils
         JsonElement element = jsonGetOrNull(property, object);
         return element == null ? defaultValue : element.getAsString();
     }
+    
+    public static double jsonGetOrDefaultDouble(String property, JsonObject object, double defaultValue)
+    {
+        JsonElement element = jsonGetOrNull(property, object);
+        return element == null ? defaultValue : element.getAsDouble();
+    }
 }

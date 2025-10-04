@@ -23,6 +23,9 @@ public class MenuItemParser
             case "separator" -> {
                 return SeparatorMenuItemParser.parse(itemObject, backgrounds[0], backgrounds[1], sounds[0], sounds[1]);
             }
+            case "text" -> {
+                return TextMenuItemParser.parse(itemObject, backgrounds[0], backgrounds[1], sounds[0], sounds[1]);
+            }
         }
         throw new IllegalArgumentException(String.format("Invalid menu item type: %s", typeString));
     }

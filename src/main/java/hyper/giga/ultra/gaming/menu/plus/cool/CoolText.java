@@ -5,6 +5,8 @@ import java.awt.geom.AffineTransform;
 
 public class CoolText
 {
+    public static final Font DEFAULT_FONT = new Font(Font.DIALOG, Font.PLAIN, 16);
+    
     public String text;
     public Font font;
     public Color color;
