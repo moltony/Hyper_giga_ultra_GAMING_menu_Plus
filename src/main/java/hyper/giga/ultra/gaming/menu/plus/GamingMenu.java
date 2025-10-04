@@ -1,16 +1,6 @@
 package hyper.giga.ultra.gaming.menu.plus;
 
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolGradientBackground;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackground;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolImageBackgroundMode;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
-import hyper.giga.ultra.gaming.menu.plus.menuitem.Alignment;
-import hyper.giga.ultra.gaming.menu.plus.menuitem.ExitMenuItem;
-import hyper.giga.ultra.gaming.menu.plus.menuitem.LauncherMenuItem;
-import hyper.giga.ultra.gaming.menu.plus.menuitem.MenuItem;
-import hyper.giga.ultra.gaming.menu.plus.menuitem.SwitchScreenMenuItem;
+import hyper.giga.ultra.gaming.menu.plus.configuration.ConfigurationLoader;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -25,7 +15,7 @@ public class GamingMenu
     
     private final double TARGET_FPS = 60.0;
     
-    private ScreenManager screenManager;
+    private final ScreenManager screenManager;
     
     public GamingMenu(String[] args)
     {
