@@ -5,34 +5,41 @@ import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import java.awt.Graphics;
+import java.util.Optional;
 
+@SuppressWarnings("LocalVariableHidesMemberVariable")
 public abstract class ImageWithTextMenuItem extends MenuItem
 {
-    protected ImageMenuItem image;
-    protected TextMenuItem text;
+    protected Optional<ImageMenuItem> image;
+    protected Optional<TextMenuItem> text;
     
     public ImageWithTextMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, CoolImage image, Alignment imageAlignment, int imageOffsetX, int imageOffsetY, CoolText text, Alignment textAlignment, int textOffsetX, int textOffsetY)
     {
         super(backgroundNormal, backgroundSelected, selectionSound, interactionSound);
         
-        this.text = new TextMenuItem(null, null, null, null, text, textAlignment, textOffsetX, textOffsetY);
-        this.image = new ImageMenuItem(null, null, null, null, image, imageAlignment, imageOffsetX, imageOffsetY);
+        this.text = Optional.ofNullable(new TextMenuItem(null, null, null, null, text, textAlignment, textOffsetX, textOffsetY));
+        this.image = Optional.ofNullable(new ImageMenuItem(null, null, null, null, image, imageAlignment, imageOffsetX, imageOffsetY));
     }
     
     @Override
     public void update()
     {
-        this.text.update();
-        this.image.update();
+        this.text.ifPresent(text -> text.update());
+        this.image.ifPresent(image -> image.update());
         
-        height = image.getHeight();
+        image.ifPresentOrElse(
+                image ->
+                    height = image.getHeight(),
+                () ->
+                    height = MenuItem.DEFAULT_HEIGHT
+        );
     }
     
     @Override
     public void render(Graphics g, int y, int width, boolean selected)
     {
         super.render(g, y, width, selected);
-        text.render(g, y, width, selected);
-        image.render(g, y, width, selected);
+        text.ifPresent(text -> text.render(g, y, width, selected));
+        image.ifPresent(image -> image.render(g, y, width, selected));
     }
 }
