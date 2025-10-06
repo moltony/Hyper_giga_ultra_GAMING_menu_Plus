@@ -1,17 +1,24 @@
 package hyper.giga.ultra.gaming.menu.plus.menuitem;
 
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
+
 
 public class SwitchScreenMenuItem extends ImageWithTextMenuItem
 {
     private int screenID;
-    
-    public SwitchScreenMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, CoolImage image, Alignment imageAlignment, int imageOffsetX, int imageOffsetY, CoolText text, Alignment textAlignment, int textOffsetX, int textOffsetY, int screenID)
+
+    public class Builder extends ImageWithTextMenuItem.Builder
     {
-        super(backgroundNormal, backgroundSelected, selectionSound, interactionSound, image, imageAlignment, imageOffsetX, imageOffsetY, text, textAlignment, textOffsetX, textOffsetY);
+        public SwitchScreenMenuItem build(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, int screenID)
+        {
+            return new SwitchScreenMenuItem(buildCommonArgs(backgroundNormal, backgroundSelected, selectionSound, interactionSound), screenID);
+        }
+    }
+    
+    public SwitchScreenMenuItem(ImageWithTextMenuItemArgs args, int screenID)
+    {
+        super(args);
         this.screenID = screenID;
     }
     

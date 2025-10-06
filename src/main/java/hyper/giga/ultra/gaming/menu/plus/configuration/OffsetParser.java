@@ -17,4 +17,16 @@ public class OffsetParser
         int y = JsonUtils.jsonGetOrDefaultInt("y", offsetObject, 0);
         return new int[] {x, y};
     }
+    
+    public static Integer[] parseNullable(JsonElement offsetElement)
+    {
+        if (offsetElement == null || !offsetElement.isJsonObject()) {
+            return new Integer[] {null, null};
+        }
+        
+        JsonObject offsetObject = offsetElement.getAsJsonObject();
+        Integer x = JsonUtils.jsonGetOrNullInt("x", offsetObject);
+        Integer y = JsonUtils.jsonGetOrNullInt("y", offsetObject);
+        return new Integer[] {x, y};
+    }
 }

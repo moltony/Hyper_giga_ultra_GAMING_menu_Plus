@@ -14,9 +14,20 @@ public class LauncherMenuItem extends ImageWithTextMenuItem
     private String workingDirectory;
     boolean closeOnLaunch;
     
-    public LauncherMenuItem(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, CoolImage image, Alignment imageAlignment, int imageOffsetX, int imageOffsetY, CoolText text, Alignment textAlignment, int textOffsetX, int textOffsetY, String[] arguments, String workingDirectory, boolean closeOnLaunch)
+    public class Builder extends ImageWithTextMenuItem.Builder
     {
-        super(backgroundNormal, backgroundSelected, selectionSound, interactionSound, image, imageAlignment, imageOffsetX, imageOffsetY, text, textAlignment, textOffsetX, textOffsetY);
+        public LauncherMenuItem build(
+                CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound,
+                String[] arguments, String workingDirectory, boolean closeOnLaunch)
+        {
+            return new LauncherMenuItem(buildCommonArgs(backgroundNormal, backgroundSelected, selectionSound, interactionSound), arguments, workingDirectory, closeOnLaunch);
+        }
+        
+    }
+    
+    public LauncherMenuItem(ImageWithTextMenuItemArgs args, String[] arguments, String workingDirectory, boolean closeOnLaunch)
+    {
+        super(args);
         this.arguments = arguments;
         this.workingDirectory = workingDirectory;
         this.closeOnLaunch = closeOnLaunch;

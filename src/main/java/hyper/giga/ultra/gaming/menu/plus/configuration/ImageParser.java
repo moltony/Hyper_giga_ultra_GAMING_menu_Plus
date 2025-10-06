@@ -13,7 +13,7 @@ public class ImageParser
     public static CoolImage parse(JsonElement element)
     {
         if (element == null || element.isJsonNull() || !element.isJsonObject()) {
-            throw new IllegalArgumentException("Image not present or has incorrect data type");
+            return null;
         }
         JsonObject imageObject = element.getAsJsonObject();
         

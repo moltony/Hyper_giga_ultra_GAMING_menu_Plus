@@ -76,4 +76,9 @@ public abstract class MenuItem
     {
         return height;
     }
+    
+    protected static<T> T resolveState(boolean selected, T normalValue, Optional<T> selectedValue)
+    {
+        return selected ? selectedValue.orElse(normalValue) : normalValue;
+    }
 }

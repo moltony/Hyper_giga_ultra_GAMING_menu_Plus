@@ -17,6 +17,12 @@ public class JsonUtils
         return element == null ? defaultValue : element.getAsInt();
     }
     
+    public static Integer jsonGetOrNullInt(String property, JsonObject object)
+    {
+        JsonElement element = jsonGetOrNull(property, object);
+        return element == null? null : element.getAsInt();
+    }
+    
     public static float jsonGetOrDefaultFloat(String property, JsonObject object, float defaultValue)
     {
         JsonElement element = jsonGetOrNull(property, object);
