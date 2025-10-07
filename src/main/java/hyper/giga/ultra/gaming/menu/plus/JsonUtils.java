@@ -40,4 +40,10 @@ public class JsonUtils
         JsonElement element = jsonGetOrNull(property, object);
         return element == null ? defaultValue : element.getAsDouble();
     }
+    
+    public static boolean jsonGetOrDefaultBoolean(String property, JsonObject object, boolean defaultValue)
+    {
+        JsonElement element = jsonGetOrNull(property, object);
+        return element == null ? defaultValue : element.getAsBoolean();
+    }
 }

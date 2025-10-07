@@ -9,10 +9,10 @@ import java.util.Optional;
 
 public abstract class ImageWithTextMenuItem extends MenuItem
 {
-    protected Optional<ImageMenuItem> image, selectedImage;
-    protected Optional<TextMenuItem> text, selectedText;
+    protected Optional<ImageMenuItem> image;
+    protected Optional<TextMenuItem> text;
 
-    public abstract class Builder
+    public static abstract class Builder
     {
         protected Optional<CoolImage> image, selectedImage;
         protected Optional<CoolText> text, selectedText;
@@ -127,9 +127,7 @@ public abstract class ImageWithTextMenuItem extends MenuItem
     public void update()
     {
         this.text.ifPresent(t -> t.update());
-        this.selectedText.ifPresent(t -> t.update());
         this.image.ifPresent(i -> i.update());
-        this.selectedImage.ifPresent(i -> i.update());
         
         image.ifPresentOrElse(
                 i -> height = i.getHeight(),
@@ -141,15 +139,11 @@ public abstract class ImageWithTextMenuItem extends MenuItem
     public void render(Graphics g, int y, int width, boolean selected)
     {
         super.render(g, y, width, selected);
-        if (selected) {
-            selectedText.ifPresentOrElse(
-                    t -> t.render(g, y, width, selected),
-                    () -> text.ifPresent(t -> t.render(g, y, width, selected))
-            );
-            selectedImage.ifPresentOrElse(
-                    i -> i.render(g, y, width, selected),
-                    () -> image.ifPresent(i -> i.render(g, y, width, selected))
-            );
-        }
+        text.ifPresent(
+                t -> t.render(g, y, width, selected)
+        );
+        image.ifPresent(
+                i -> i.render(g, y, width, selected)
+        );
     }
 }

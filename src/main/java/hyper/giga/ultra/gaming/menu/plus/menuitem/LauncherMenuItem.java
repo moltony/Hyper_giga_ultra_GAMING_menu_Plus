@@ -2,9 +2,7 @@ package hyper.giga.ultra.gaming.menu.plus.menuitem;
 
 import hyper.giga.ultra.gaming.menu.plus.ErrorHandler;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolBackground;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
-import hyper.giga.ultra.gaming.menu.plus.cool.CoolText;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,7 +12,7 @@ public class LauncherMenuItem extends ImageWithTextMenuItem
     private String workingDirectory;
     boolean closeOnLaunch;
     
-    public class Builder extends ImageWithTextMenuItem.Builder
+    public static class Builder extends ImageWithTextMenuItem.Builder
     {
         public LauncherMenuItem build(
                 CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound,
