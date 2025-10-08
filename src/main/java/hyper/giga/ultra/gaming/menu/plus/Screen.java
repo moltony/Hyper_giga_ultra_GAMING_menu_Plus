@@ -100,6 +100,15 @@ public class Screen
             case KeyEvent.VK_ENTER -> {
                 handleInteraction();
             }
+            case KeyEvent.VK_ESCAPE -> {
+                closeRequested = true;
+            }
+            case KeyEvent.VK_HOME -> {
+                selected = 0;
+            }
+            case KeyEvent.VK_END -> {
+                selected = items.length - 1;
+            }
         }
     }
     
