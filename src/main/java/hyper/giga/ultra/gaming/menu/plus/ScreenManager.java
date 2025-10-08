@@ -50,7 +50,9 @@ public class ScreenManager implements MouseMotionListener, KeyListener, MouseLis
     
     public void setCurrentScreen(int screen)
     {
-        current = screen;
+        if (!(screen < 0 || screen >= screens.length)) {
+            current = screen;
+        }
     }
     
     public int getScreenWidth()
