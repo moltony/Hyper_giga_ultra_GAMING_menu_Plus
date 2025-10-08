@@ -32,6 +32,9 @@ public class MenuItemParser
             case "launcher" -> {
                 return LauncherMenuItemParser.parse(itemObject, backgrounds[0], backgrounds[1], sounds[0], sounds[1]);
             }
+            case "exit" -> {
+                return ExitMenuItemParser.parse(itemObject, backgrounds[0], backgrounds[1], sounds[0], sounds[1]);
+            }
         }
         throw new IllegalArgumentException(String.format("Invalid menu item type: %s", typeString));
     }

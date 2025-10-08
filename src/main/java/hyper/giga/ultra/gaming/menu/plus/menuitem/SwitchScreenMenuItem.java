@@ -8,7 +8,7 @@ public class SwitchScreenMenuItem extends ImageWithTextMenuItem
 {
     private int screenID;
 
-    public class Builder extends ImageWithTextMenuItem.Builder
+    public static class Builder extends ImageWithTextMenuItem.Builder
     {
         public SwitchScreenMenuItem build(CoolBackground backgroundNormal, CoolBackground backgroundSelected, CoolSound selectionSound, CoolSound interactionSound, int screenID)
         {
