@@ -19,7 +19,15 @@ public class GamingMenu
     
     public GamingMenu(String[] args)
     {
-        screenManager = new ScreenManager(ConfigurationLoader.loadConfiguration(args[0]));
+        String configFile;
+        try {
+            configFile = args[0];
+        } catch (ArrayIndexOutOfBoundsException exc) {
+            System.err.println("Please specify a configuration file.");
+            System.exit(1);
+            throw new RuntimeException();
+        }
+        screenManager = new ScreenManager(ConfigurationLoader.loadConfiguration(configFile));
         
         createWindow(screenManager.getScreenWidth(), screenManager.getScreenHeight());
     }
