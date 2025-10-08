@@ -18,6 +18,22 @@
         <exec.mainClass>hyper.giga.ultra.gaming.menu.plus.Main</exec.mainClass>
     </properties>
     <name>Hyper giga ultra GAMING menu Plus</name>
-    <description>The Hyper giga ultra GAMING menu Plus is an infinitely customizable
-application launcher.</description>
+    <description>The Hyper giga ultra GAMING menu Plus is an infinitely customizable application launcher.</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>hyper.giga.ultra.gaming.menu.plus.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
