@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import hyper.giga.ultra.gaming.menu.plus.AnimationLoader;
 import hyper.giga.ultra.gaming.menu.plus.JsonUtils;
+import hyper.giga.ultra.gaming.menu.plus.PathUtils;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolImage;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -17,7 +18,7 @@ public class ImageParser
         }
         JsonObject imageObject = element.getAsJsonObject();
         
-        String imageFile = imageObject.get("file").getAsString();
+        String imageFile = PathUtils.expandHome(imageObject.get("file").getAsString());
         if (imageFile == null) {
             throw new IllegalArgumentException("Image path not present");
         }

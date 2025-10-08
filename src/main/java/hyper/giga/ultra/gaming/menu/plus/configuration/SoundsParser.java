@@ -3,6 +3,7 @@ package hyper.giga.ultra.gaming.menu.plus.configuration;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import hyper.giga.ultra.gaming.menu.plus.JsonUtils;
+import hyper.giga.ultra.gaming.menu.plus.PathUtils;
 import hyper.giga.ultra.gaming.menu.plus.cool.CoolSound;
 
 public class SoundsParser
@@ -18,8 +19,8 @@ public class SoundsParser
         String selectSoundPath = JsonUtils.jsonGetOrDefaultString("select", soundsObject, null);
         String interactSoundPath = JsonUtils.jsonGetOrDefaultString("interact", soundsObject, null);
         return new CoolSound[] {
-            selectSoundPath == null ? null : new CoolSound(selectSoundPath),
-            interactSoundPath == null ? null : new CoolSound(interactSoundPath)
+            selectSoundPath == null ? null : new CoolSound(PathUtils.expandHome(selectSoundPath)),
+            interactSoundPath == null ? null : new CoolSound(PathUtils.expandHome(interactSoundPath))
         };
     }
 }
